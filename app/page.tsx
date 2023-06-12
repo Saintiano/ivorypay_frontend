@@ -94,7 +94,7 @@ export default function Home() {
           >
             <HeaderComponent headerTitle={'Create Transaction'}/>
             <CreateTransaction/>
-            Content 1
+
           </Content>
          : pageContent === '2' ? 
           <Content

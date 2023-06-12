@@ -1,64 +1,87 @@
 import * as React from 'react'
 import { Transaction } from '../models/transaction.class'
-import { Input, InputNumber, } from 'antd'
+import { Button, Input, InputNumber, } from 'antd'
 
-type CreateTransactionProps = {
-    savePost?: (e: React.FormEvent, formData: Transaction) => void
-}
+const CreateTransaction: React.FC = () => {
 
-const CreateTransaction: React.FC<CreateTransactionProps> = ({ savePost }) => {
-
-  const [formData, setFormData] = React.useState<Transaction>();
-
-  const handleForm = (e: React.FormEvent<HTMLInputElement>): void => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.currentTarget?.id]: e.currentTarget?.value,
-    } as Transaction));
-  };
+  const [price, setPrice] = React.useState<number>();
+  const [firstName, setFirstName] = React.useState<string>();
+  const [lastName, setLastName] = React.useState<string>();
+  const [email, setEmail] = React.useState<string>();
+  const [itemName, setItemName] = React.useState<string>();
+  const [transactionDescription, setTransactionDescription] = React.useState<string>();
 
   const onChange = (value: number | string) => {
     console.log('changed', value);
   };
 
+  const handleFirstName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(event.target.value);
+  };
+
+  const handleLastName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(event.target.value);
+  };
+
+  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handleTransactDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTransactionDescription(event.target.value);
+  };
+
+  const handleItemName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setItemName(event.target.value);
+  };
+
+  const handlePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPrice(Number(event.target.value));
+  };
+
+  const handleSubmit = (event:any) => {
+    event.preventDefault();
+    console.log(event);
+  }
+
   return (
-    <form className='Form' onSubmit={(e) => savePost!(e, formData as Transaction)}>
+    <form className='Form'>
       <div>
         <div className='Form--field'>
           <label htmlFor='name'>First Name</label>
           <Input placeholder="First Name"
-            onChange={handleForm}
+            onChange={handleFirstName}
           />
         </div>
         <div className='Form--field'>
           <label htmlFor='last_name'>Last Name </label>
           <Input placeholder="Last Name"
-            onChange={handleForm}
+            onChange={handleLastName}
           />
         </div>
         <div className='Form--field'>
           <label htmlFor='email'>Email </label>
           <Input placeholder="Email"
-            onChange={handleForm}
+            onChange={handleEmail}
           />
         </div>
         <div className='Form--field'>
           <label htmlFor='item_name'>Item Name </label>
           <Input placeholder="Item Name"
-            onChange={handleForm}
+            onChange={handleItemName}
           />
         </div>
 
         <div className='Form--field'>
           <label htmlFor='transaction_description'>Transaction Description </label>
           <Input placeholder="Transaction Description"
-            onChange={handleForm}
+            onChange={handleTransactDescription}
           />
         </div>
         <div className='Form--field'>
           <label htmlFor='price'>Price </label>
           <InputNumber
-            defaultValue={1000}
+            defaultValue={price}
             formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             // parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
             onChange={(value) =>onChange(value!)}
@@ -66,12 +89,12 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({ savePost }) => {
         </div>
         
       </div>
-      <button
-        className='Form__button'
-        disabled={formData === undefined ? true : false}
+      <Button type="primary"
+        onClick={() => handleSubmit(event)}
       >
         Create Transaction
-      </button>
+      </Button>
+
     </form>
   )
 }
