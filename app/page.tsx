@@ -17,12 +17,13 @@ import Image from 'next/image'
 import { Content, Header } from 'antd/es/layout/layout';
 import HeaderComponent from './components/header';
 import CreateTransaction from './home/CreateTransaction';
+import TransactionHistory from './home/TransactionHistory';
 
 
 export default function Home() {
   
   const [collapsed, setCollapsed] = useState(false);
-  const [pageContent, setPageContent] = useState<string>('');
+  const [pageContent, setPageContent] = useState<string>('1');
 
   const changeContentPage  = (key : string) => {
     if(key === '1'){
@@ -106,7 +107,7 @@ export default function Home() {
             }}
           >
             <HeaderComponent headerTitle={'Transaction History'}/>
-            Content 2
+            <TransactionHistory pageContent={pageContent}/>
           </Content>
           :
           <Content

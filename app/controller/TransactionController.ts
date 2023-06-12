@@ -1,4 +1,5 @@
 import CreateTransaction from '../home/CreateTransaction';
+import transactionServices from '../services/Transaction_Services';
 import Transaction_Services from '../services/Transaction_Services';
 class TransactionController {
 
@@ -27,6 +28,10 @@ class TransactionController {
 
             console.log(response);
 
+            if (response.status == 200) {
+                return response;
+            }
+
         })
         .catch((error) =>{
 
@@ -34,6 +39,30 @@ class TransactionController {
             console.log('error message ' + error.toString());
 
         });
+
+        console.log(response);
+
+    }
+
+    transactionHistory(){
+
+        let response = transactionServices.getAllTransactions("No Bearer Token required").then((response) =>{
+
+            console.log(response.data);
+            console.log(response.status);
+
+            if (response.status == 200) {
+                return response.data;
+            }
+
+        }).catch((error) =>{
+
+            console.log('error ' + error.toJSON);
+            console.log('error message ' + error.toString());
+
+        });
+
+        return response;
 
     }
 

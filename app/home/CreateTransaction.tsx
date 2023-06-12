@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { Transaction } from '../models/transaction.class'
-import { Button, Input, InputNumber, } from 'antd'
+import { Input, InputNumber, } from 'antd'
+import transactionController from '../controller/TransactionController';
 
 const CreateTransaction: React.FC = () => {
 
-  const [price, setPrice] = React.useState<number>();
+  const [price, setPrice] = React.useState<number | string>(0);
   const [firstName, setFirstName] = React.useState<string>();
   const [lastName, setLastName] = React.useState<string>();
   const [email, setEmail] = React.useState<string>();
@@ -13,6 +14,7 @@ const CreateTransaction: React.FC = () => {
 
   const onChange = (value: number | string) => {
     console.log('changed', value);
+    setPrice(value);
   };
 
   const handleFirstName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +43,18 @@ const CreateTransaction: React.FC = () => {
 
   const handleSubmit = (event:any) => {
     event.preventDefault();
-    console.log(event);
+    // console.log(event);
+    console.log("submit fired");
+    let response = transactionController.saveTranction(
+      firstName!, 
+      lastName!, 
+      email!, 
+      itemName!,
+      transactionDescription!, 
+      Number(price!)
+    );
+
+    console.log(response);
   }
 
   return (
@@ -89,13 +102,13 @@ const CreateTransaction: React.FC = () => {
         </div>
         
       </div>
-      <Button type="primary"
-        onClick={() => handleSubmit(event)}
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+       onClick={handleSubmit}
       >
         Create Transaction
-      </Button>
+      </button>
 
     </form>
   )
 }
-export default CreateTransaction
+export default CreateTransaction;

@@ -12,3 +12,10 @@ export interface Transaction {
     createdAt?: Date;
 }
 
+
+export interface TransactionHistoryResponse {
+    status: string,
+    message: string,
+    statusCode: number,
+    data: Transaction[]
+}
